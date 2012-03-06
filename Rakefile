@@ -18,7 +18,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/ondrejbartas/sinatra-redis-auth"
   gem.license = "MIT"
   gem.summary = %Q{Sinatra authentification with saving user data to redis}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.description = %Q{Sinatra authentification with saving user data to redis}
   gem.email = "ondrej@bartas.cz"
   gem.authors = ["Ondrej Bartas"]
   # dependencies defined in Gemfile
