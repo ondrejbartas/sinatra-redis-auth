@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Example sinatra auth app</title>
+  <body>
+    <% if @current_user %>
+      <%= @current_user.email %> | <a href="/sign_out"> Sign Out </a>
+    <% else %>
+      <a href="/sign_in"> Sign In </a> | <a href="/sign_up"> Sign Up </a>
+    <% end %>
+    <% if flash[:notice] %>
+      <i><%= flash[:notice] %></i>
+    <% end %>
+    <% if flash[:error] %>
+      <b><%= flash[:error] %></b>
+    <% end %>
+    
+    <%= yield %>
+  </body>
+</html>
