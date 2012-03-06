@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ondrej Bartas"]
   s.date = "2012-03-06"
-  s.description = "TODO: longer description of your gem"
+  s.description = "Sinatra authentification with saving user data to redis"
   s.email = "ondrej@bartas.cz"
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -41,6 +41,7 @@ Gem::Specification.new do |s|
     "lib/views/password_reset.erb",
     "lib/views/sign_in.erb",
     "lib/views/sign_up.erb",
+    "sinatra-redis-auth.gemspec",
     "test/helper.rb",
     "test/test_sinatra-redis-auth.rb"
   ]
