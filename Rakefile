@@ -14,10 +14,10 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "redis-auth"
-  gem.homepage = "http://github.com/ondrejbartas/redis-auth"
+  gem.name = "sinatra-redis-auth"
+  gem.homepage = "http://github.com/ondrejbartas/sinatra-redis-auth"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
+  gem.summary = %Q{Sinatra authentification with saving user data to redis}
   gem.description = %Q{TODO: longer description of your gem}
   gem.email = "ondrej@bartas.cz"
   gem.authors = ["Ondrej Bartas"]
@@ -32,22 +32,16 @@ Rake::TestTask.new(:test) do |test|
   test.verbose = true
 end
 
-require 'rcov/rcovtask'
-Rcov::RcovTask.new do |test|
-  test.libs << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-  test.rcov_opts << '--exclude "gems/*"'
-end
-
 task :default => :test
 
-require 'rdoc/task'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "redis-auth #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
+namespace :'sinatra-redis-auth' do
+  task :install do
+    FileUtils.mkdir_p('config') unless File.exists?('config')
+    ["redis_config.yml", "sinatra_mailer.rb"].each do |name|
+      unless File.exists?("config/#{name}")
+        puts "created config file: 'config/#{name}'"
+        FileUtils.cp(File.join(File.dirname(__FILE__),"../config/#{name}.example"), "config/#{name}")
+      end
+    end
+  end
 end
