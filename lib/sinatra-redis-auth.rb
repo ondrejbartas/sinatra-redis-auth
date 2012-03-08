@@ -16,6 +16,9 @@ module Sinatra
       app.use Rack::Session::Redis
       app.use Rack::Flash, :accessorize => [:notice, :error]
       app.set :sinatra_redis_auth_views, File.expand_path('../views/', __FILE__)
+      app.set :default_url_after_sign_in, "/"
+      app.set :default_url_after_sign_up, "/"
+      app.set :default_url_after_sign_out, "/"
 
       app.before do
         if session[:user]
@@ -27,7 +30,7 @@ module Sinatra
       
       app.get '/sign_in' do
         if session[:user]
-          redirect '/'
+          redirect options.default_url_after_sign_in
         else
           erb get_view_as_string("sign_in"), :layout => use_layout?
         end
@@ -47,7 +50,7 @@ module Sinatra
             session[:return_to] = false
             redirect redirect_url
           else
-            redirect '/'
+            redirect options.default_url_after_sign_in
           end
         else
           if Rack.const_defined?('Flash')
@@ -62,12 +65,12 @@ module Sinatra
         if Rack.const_defined?('Flash')
           flash[:notice] = "Logout successful."
         end
-        redirect '/'
+        redirect options.default_url_after_sign_out
       end
 
       app.get '/sign_up' do
         if session[:user]
-          redirect '/'
+          redirect options.default_url_after_sign_up
         else
           erb get_view_as_string("sign_up"), :layout => use_layout?
         end
@@ -85,7 +88,7 @@ module Sinatra
             session[:return_to] = false
             redirect session[:return_to]
           else
-            redirect "/"
+            redirect options.default_url_after_sign_up
           end
         else
           if Rack.const_defined?('Flash')
@@ -96,7 +99,7 @@ module Sinatra
       end
       app.get '/password/reset' do
         if session[:user]
-          redirect '/'
+          redirect options.default_url_after_sign_in
         else
           erb get_view_as_string("password_reset"), :layout => use_layout?
         end
